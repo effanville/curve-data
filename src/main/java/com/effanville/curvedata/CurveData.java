@@ -40,14 +40,32 @@ public class CurveData implements Curve {
         Buckets.sort(new CurveBucketStartTimeComparator());
     }
 
+    /**
+     * This provides some simple validation that is applicable for all curves, namely that the
+     * volume in each bucket is +ve, no time is in multiple buckets, and that there is exactly 100%
+     * of volume over the curve. Given an arbitrary symbol, there is not much more one can validate.
+     * <p>
+     * We could go further and validate that the various bucket types were are correct points, i.e.
+     * that open auction was at the start, and close auction was the last positive bucket, but we
+     * leave that to future work.
+     * <p>
+     * If there was more information on the specific symbol, i.e. what exchange it was listed on,
+     * then one could further validate that the bucket types aligned with the relevant sessions,
+     * i.e. that one did not observe open auction volume in continuous trading (unless that was
+     * expected, e.g. TSE), or that there wasn't continuous trading volume in intraday closes.
+     * <p>
+     * If one further knew that this was a liquid symbol, then one could further verify that the
+     * curve was "smooth" in some sense, possibly that the deviation in % between continuous trading
+     * buckets was not over a threshold too often.
+     */
     @Override
     public Boolean isValid() {
         if (doBucketsOverlap())
             return false;
 
-        for(int index = 0; index < Buckets.size();index++){
+        for (int index = 0; index < Buckets.size(); index++) {
             CurveBucket bucket = Buckets.get(index);
-            if(!bucket.isValid())
+            if (!bucket.isValid())
                 return false;
         }
 
