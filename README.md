@@ -3,8 +3,8 @@
 A small collection of classes for storing curve data, and allowing for
 curve data to be retrieved.
 
-The primary class to use is the `Curve` interface that allows for retrieving the volume 
-distribution, and for retrieving the volume between two times using the `getVolume(start, end)`
+The primary class to use is the `Curve` interface that allows for retrieving the volume between
+two times using the `getVolume(start, end)`
 method. A further method to get normalised volume at a time from the volume between two other times,
 `getRelativeVolume(start, end, time)` is also provided.
 
@@ -28,6 +28,11 @@ allow for times over a single day.
 
 Further, we also assume that there are no other bucket types other than those given in the `BucketType`
 enum.
+
+We also implicitly assume that each curve is specified solely by the `symbol`. In practise this is an
+insufficient identifier, as the curve could depend upon the time the volume curve was an average over
+(e.g. 1 week or 2 week curve), as well as whether the curve was for special days or not. This would be 
+a straightforward enhancement, but providing such information was beyond the scope of what was required. 
 
 We do not assume, however, that the curve is specified by buckets of fixed time length.
 
