@@ -21,6 +21,21 @@ startTime,endTime,volume,bucketType
 
 This code is all used in a sample main method in the `App` class.
 
+## Execution
+
+To execute the example provided, first build using
+
+```
+mvn clean install
+```
+
+and then run with working directory the root of the repo the following:
+
+```
+java -jar target/curvedata-1.0.0.jar
+
+```
+
 ## Assumptions
 
 The curves here assume that the total timespan is within the same day, as the `LocalTime` class doesn't

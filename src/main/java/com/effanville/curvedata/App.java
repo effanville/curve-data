@@ -6,15 +6,22 @@ import com.effanville.curvedata.IO.CurveCsvReader;
 
 public class App {
     /**
-     * Example routine to read a curve from a csv file and then validate the curve, with retrieval
-     * of curve data to demonstrate the curve is loaded.
+     * Example routine to read a curve from a csv file and then validate the curve,
+     * with retrieval
+     * of curve data to demonstrate the curve is loaded. An optional ability to
+     * specify the file from the arguments is given.
      * <p>
-     * The intention is to provide a sample implementation of reading the file and verifying
-     * validity. In a more complex application, handling to deal with and invalid curve would be
+     * The intention is to provide a sample implementation of reading the file and
+     * verifying
+     * validity. In a more complex application, handling to deal with and invalid
+     * curve would be
      * provided.
      */
     public static void main(String[] args) {
         String filePath = "src/main/resources/Generic_HK.csv";
+        if (args.length > 0) {
+            filePath = args[0];
+        }
         File file = new File(filePath);
 
         CurveCsvReader reader = new CurveCsvReader();
