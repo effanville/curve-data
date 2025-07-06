@@ -24,14 +24,13 @@ public class CurveDataTest {
 
     @Test
     public void areBucketsSortedTest() {
-        Curve curve = CurveData.Of("1 HK");
+        CurveData curve = CurveData.Of("1 HK");
         LocalTime start = LocalTime.parse("09:00:00");
         LocalTime end = LocalTime.parse("09:05:00");
         LocalTime end2 = LocalTime.parse("09:10:00");
         curve.addBucket(CurveBucket.Of(end, end2, 25, BucketType.OPEN_AUCTION));
         curve.addBucket(CurveBucket.Of(start, end, 5, BucketType.CONT_TRADING));
-        CurveBucket firstBucket = curve.getBuckets().get(0);
-        assertEquals(start, firstBucket.getStartTime());
+        assertEquals(start, curve.getStartTime());
     }
 
     @Test
@@ -113,20 +112,20 @@ public class CurveDataTest {
 
     private static Stream<Arguments> providerForGetVolume() {
         return Stream.of(
-            Arguments.of(LocalTime.parse("09:00:00"),
-                LocalTime.parse("11:00:00"), 100),
+                Arguments.of(LocalTime.parse("09:00:00"),
+                        LocalTime.parse("11:00:00"), 100),
 
-            Arguments.of(LocalTime.parse("09:05:00"),
-                LocalTime.parse("10:10:00"), 85),
+                Arguments.of(LocalTime.parse("09:05:00"),
+                        LocalTime.parse("10:10:00"), 85),
 
-            Arguments.of(LocalTime.parse("09:07:30"),
-                LocalTime.parse("10:10:00"), 72.5),
+                Arguments.of(LocalTime.parse("09:07:30"),
+                        LocalTime.parse("10:10:00"), 72.5),
 
-            Arguments.of(LocalTime.parse("09:07:30"),
-                LocalTime.parse("09:09:30"), 10),
+                Arguments.of(LocalTime.parse("09:07:30"),
+                        LocalTime.parse("09:09:30"), 10),
 
-            Arguments.of(LocalTime.parse("09:07:30"),
-                LocalTime.parse("10:20:00"), 74.5));
+                Arguments.of(LocalTime.parse("09:07:30"),
+                        LocalTime.parse("10:20:00"), 74.5));
     }
 
     @ParameterizedTest
@@ -139,26 +138,26 @@ public class CurveDataTest {
 
     private static Stream<Arguments> providerForGetRelativeVolume() {
         return Stream.of(
-            Arguments.of(LocalTime.parse("09:00:00"),
-                    LocalTime.parse("09:10:00"),
-                    LocalTime.parse("09:05:00"), 16.66666666),
+                Arguments.of(LocalTime.parse("09:00:00"),
+                        LocalTime.parse("09:10:00"),
+                        LocalTime.parse("09:05:00"), 16.66666666),
 
-            Arguments.of(LocalTime.parse("09:00:00"),
-                    LocalTime.parse("11:00:00"),
-                    LocalTime.parse("09:05:00"), 5),
+                Arguments.of(LocalTime.parse("09:00:00"),
+                        LocalTime.parse("11:00:00"),
+                        LocalTime.parse("09:05:00"), 5),
 
-            Arguments.of(LocalTime.parse("09:00:00"),
-                    LocalTime.parse("11:00:00"),
-                    LocalTime.parse("10:10:00"), 90),
+                Arguments.of(LocalTime.parse("09:00:00"),
+                        LocalTime.parse("11:00:00"),
+                        LocalTime.parse("10:10:00"), 90),
 
-            Arguments.of(LocalTime.parse("09:00:00"),
-                    LocalTime.parse("11:00:00"),
-                    LocalTime.parse("10:10:00"), 90),
+                Arguments.of(LocalTime.parse("09:00:00"),
+                        LocalTime.parse("11:00:00"),
+                        LocalTime.parse("10:10:00"), 90),
 
-            Arguments.of(LocalTime.parse("04:00:00"),
-                    LocalTime.parse("07:00:00"),
-                    LocalTime.parse("05:00:00"), Double.NaN));
-   }
+                Arguments.of(LocalTime.parse("04:00:00"),
+                        LocalTime.parse("07:00:00"),
+                        LocalTime.parse("05:00:00"), Double.NaN));
+    }
 
     @ParameterizedTest
     @MethodSource("providerForGetRelativeVolume")
@@ -191,5 +190,5 @@ public class CurveDataTest {
         curve.addBucket(CurveBucket.Of(thirdBucketEnd, fourthBucketEnd, 10,
                 BucketType.CONT_TRADING));
         return curve;
-    }  
+    }
 }

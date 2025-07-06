@@ -12,10 +12,6 @@ public class CurveData implements Curve {
     private String Symbol;
     private List<CurveBucket> Buckets = new ArrayList<CurveBucket>();
 
-    /*
-     * Some Validation - Maybe some smoothness (cont trading sessions should not have too many
-     * spikes next to each other)
-     */
     private CurveData(String symbol) {
         Symbol = symbol;
     }
@@ -30,8 +26,12 @@ public class CurveData implements Curve {
     }
 
     @Override
-    public List<CurveBucket> getBuckets() {
-        return Buckets;
+    public int numberBuckets() {
+        return Buckets.size();
+    }
+
+    public LocalTime getStartTime() {
+        return Buckets.getFirst().getStartTime();
     }
 
     @Override
@@ -41,21 +41,32 @@ public class CurveData implements Curve {
     }
 
     /**
-     * This provides some simple validation that is applicable for all curves, namely that the
-     * volume in each bucket is +ve, no time is in multiple buckets, and that there is exactly 100%
-     * of volume over the curve. Given an arbitrary symbol, there is not much more one can validate.
+     * This provides some simple validation that is applicable for all curves,
+     * namely that the
+     * volume in each bucket is +ve, no time is in multiple buckets, and that there
+     * is exactly 100%
+     * of volume over the curve. Given an arbitrary symbol, there is not much more
+     * one can validate.
      * <p>
-     * We could go further and validate that the various bucket types were are correct points, i.e.
-     * that open auction was at the start, and close auction was the last positive bucket, but we
+     * We could go further and validate that the various bucket types were are
+     * correct points, i.e.
+     * that open auction was at the start, and close auction was the last positive
+     * bucket, but we
      * leave that to future work.
      * <p>
-     * If there was more information on the specific symbol, i.e. what exchange it was listed on,
-     * then one could further validate that the bucket types aligned with the relevant sessions,
-     * i.e. that one did not observe open auction volume in continuous trading (unless that was
-     * expected, e.g. TSE), or that there wasn't continuous trading volume in intraday closes.
+     * If there was more information on the specific symbol, i.e. what exchange it
+     * was listed on,
+     * then one could further validate that the bucket types aligned with the
+     * relevant sessions,
+     * i.e. that one did not observe open auction volume in continuous trading
+     * (unless that was
+     * expected, e.g. TSE), or that there wasn't continuous trading volume in
+     * intraday closes.
      * <p>
-     * If one further knew that this was a liquid symbol, then one could further verify that the
-     * curve was "smooth" in some sense, possibly that the deviation in % between continuous trading
+     * If one further knew that this was a liquid symbol, then one could further
+     * verify that the
+     * curve was "smooth" in some sense, possibly that the deviation in % between
+     * continuous trading
      * buckets was not over a threshold too often.
      */
     @Override
@@ -171,7 +182,8 @@ public class CurveData implements Curve {
     }
 
     /**
-     * Given a bucket we calculate the relative fraction of volume in the bucket up until the time
+     * Given a bucket we calculate the relative fraction of volume in the bucket up
+     * until the time
      * given. The timeVolume is the already observed volume in the curve.
      */
     private double AddBucketVolume(LocalTime time, CurveBucket bucket, double timeVolume) {

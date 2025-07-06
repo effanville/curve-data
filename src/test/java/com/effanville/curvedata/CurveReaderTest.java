@@ -12,7 +12,7 @@ public class CurveReaderTest {
         CurveCsvReader reader = new CurveCsvReader();
         Curve curve = reader.readCurve("5 HK", "src/test/resources/example-curve.csv");
         assertNotNull(curve);
-        assertEquals(8, curve.getBuckets().size());
+        assertEquals(8, curve.numberBuckets());
     }
 
     @Test

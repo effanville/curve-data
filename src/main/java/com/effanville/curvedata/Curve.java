@@ -1,10 +1,10 @@
 package com.effanville.curvedata;
 
 import java.time.LocalTime;
-import java.util.List;
 
 /**
- * Representation of a volume curve, with methods to retrieve volume for different parts of the
+ * Representation of a volume curve, with methods to retrieve volume for
+ * different parts of the
  * curve, and basic validation methods.
  */
 public interface Curve {
@@ -16,11 +16,11 @@ public interface Curve {
     String getSymbol();
 
     /**
-     * Returns the buckets in this Curve.
+     * Returns the number of buckets in this Curve.
      * 
-     * @return The list of the buckets.
+     * @return The number of buckets in the curve.
      */
-    List<CurveBucket> getBuckets();
+    int numberBuckets();
 
     /**
      * Add a bucket into the buckets of the curve.
@@ -40,18 +40,19 @@ public interface Curve {
      * Returns the volume between the two times.
      * 
      * @param start the starting instant to calculate volume from
-     * @param end the ending instant to calculate volume until
+     * @param end   the ending instant to calculate volume until
      * @return the volume between the start and end times
      */
     double getVolume(LocalTime start, LocalTime end);
 
     /**
-     * Returns the normalised volume at the time relative to the volume between the start and end
+     * Returns the normalised volume at the time relative to the volume between the
+     * start and end
      * time.
      * 
      * @param start the starting instant to calculate volume from
-     * @param end the ending instant to calculate volume until
-     * @param time the time to calculate the relative volume
+     * @param end   the ending instant to calculate volume until
+     * @param time  the time to calculate the relative volume
      * @return the volume between the start and end times
      */
     double getRelativeVolume(LocalTime start, LocalTime end, LocalTime time);
